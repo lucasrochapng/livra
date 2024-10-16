@@ -1,0 +1,20 @@
+body {
+    font-family: 'Roboto', sans-serif; /* Aplica a fonte a todo o corpo */
+}
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+.navbar-brand img {
+    height: 30px;
+    margin-right: 8px;
+}
+.navbar-brand span {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: white;
+}
+
+.nav-link {
+    color: white;
+}
