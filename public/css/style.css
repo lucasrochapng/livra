@@ -1,0 +1,30 @@
+body {
+    font-family: 'Roboto', sans-serif; /* Aplica a fonte a todo o corpo */
+}
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+.navbar-brand img {
+    height: 30px;
+    margin-right: 8px;
+}
+.navbar-brand span {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: white;
+}
+
+.nav-link {
+    color: white;
+}
+
+.banner-content {
+    position: absolute; /* Manter posição absoluta para sobreposição */
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta para o centro exato */
+    z-index: 2; /* Certifica-se de que está acima da sombra */
+    color: white; /* Define a cor do texto como branca */
+    text-align: center; /* Centraliza o texto */
+}
