@@ -29,7 +29,7 @@
                     <a class="nav-link" href="#">Acervo</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Coleção</a>
+                    <a class="nav-link" href="{{ url('/cadastrarLivro') }}">Coleção</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Trocas</a>
