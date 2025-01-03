@@ -18,7 +18,7 @@
                 <div>
                     <h1>Sua Comunidade Literária</h1>
                     <p>Conecte-se com amantes de livros, troque histórias e aproveite benefícios exclusivos enquanto expande sua coleção literária!</p>
-                    <a href="#" class="btn btn-primary">Comece já</a>
+                    <a href="{{ url('/listarUsuario') }}" class="btn btn-primary">Comece já</a>
                 </div>
             </div>
             <div class="col-md-4 text-center" style=""> 
