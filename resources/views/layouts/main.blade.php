@@ -22,21 +22,50 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                <!-- inicio -->
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ url('/home') }}">Início</a>
                 </li>
+                <!-- lista de livros disponíveis para troca -->
                 <li class="nav-item">
                     <a class="nav-link" href="#">Acervo</a>
                 </li>
+                <!-- lista de livros do usuário -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/cadastrarLivro') }}">Coleção</a>
                 </li>
+                <!-- lista com os pedidos de trocas em andamento -->
                 <li class="nav-item">
                     <a class="nav-link" href="#">Trocas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/faleconosco') }}">Contato</a>
                 </li>
+                <!-- janela de opções do usuário -->
+                <!-- Ícone de usuário -->
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        @if(Auth::check())
+                            <span class="dropdown-item font-weight-bold">{{ Auth::user()->nome }}</span>
+                            <a class="dropdown-item" href="{{ url('/configuracoes') }}">Configurações</a>
+                            <a class="dropdown-item" href="{{ url('/suporte') }}">Suporte</a>
+                            <a class="dropdown-item" href="{{ url('/sobre') }}">Sobre Nós</a>
+                            <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        @else
+                            <a class="dropdown-item" href="{{ url('/login') }}">Entrar</a>
+                            <a class="dropdown-item" href="{{ url('/suporte') }}">Suporte</a>
+                            <a class="dropdown-item" href="{{ url('/sobre') }}">Sobre Nós</a>
+                        @endif
+                    </div>
+                </li>
+
             </ul>
         </div>
     </nav>
@@ -47,6 +76,15 @@
     <footer class="bg-light text-center py-3">
         <p>© 2024 Livra. Todos os direitos reservados.</p>
     </footer>
+
+    <script>
+        $(document).ready(function () {
+            $('#userDropdown').click(function () {
+                $(this).next('.dropdown-menu').toggle();
+            });
+        });
+    </script>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

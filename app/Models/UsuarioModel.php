@@ -4,20 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
-class UsuarioModel extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class UsuarioModel extends Authenticatable
 {
     
     use HasFactory;
+    protected $table = 'usuario';
 
     public static function salvar(Request $request){
         $status = DB::table('usuario')->insert([
             'nome'=>$request->input('nome'),
             'email'=>$request->input('email'),
-            'senha'=>$request->input('senha'),
+            'senha'=> Hash::make($request->input('senha')),
             'telefone'=>$request->input('telefone'),
         ]);
         return $status;
@@ -36,6 +39,10 @@ class UsuarioModel extends Model
     public static function consultar($id){
         $usuario = DB::table('usuario')->where('id', $id)->first();
         return $usuario;
+    }
+
+    public function getAuthPassword(){
+        return $this->senha;
     }
 
 }

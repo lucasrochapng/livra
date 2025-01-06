@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Usuario;
 use App\Http\Controllers\Livro;
+use App\Http\Controllers\AuthController;
 
 Route::get('/home', function () {
     return view('home');
@@ -11,6 +12,29 @@ Route::get('/home', function () {
 Route::get('/faleconosco', function () {
     return view('faleconosco');
 });
+
+// Rota para autenticação
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+Route::middleware('auth')->group(function(){
+    Route::get('/dashboard', function(){
+        return view('dashboard');
+    });
+});
+
+// Rotas adicionais
+Route::get('/suporte', function () {
+    return view('suporte');
+});
+Route::get('/sobre', function () {
+    return view('sobre');
+});
+Route::get('/configuracoes', function () {
+    return view('configuracoes');
+})->middleware('auth'); // Apenas usuários logados podem acessar
 
 Route::get('cadastrarUsuario', [Usuario::class, 'create']);
 Route::post('cadastrarUsuario', [Usuario::class, 'store']);
