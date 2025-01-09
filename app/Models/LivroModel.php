@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class LivroModel extends Model
 {
@@ -22,7 +23,10 @@ class LivroModel extends Model
     public static function salvar(Request $request)
     {
         // Armazena a imagem, caso tenha sido enviada
-        $path = $request->file('foto_livro') ? $request->file('foto_livro')->store('livros') : null;
+        //$path = $request->file('foto_livro') ? $request->file('foto_livro')->store('livros') : null;
+
+        // Processa o upload da nova imagem, caso tenha sido enviada
+        $path = $request->file('foto_livro') ? $request->file('foto_livro')->store('livros', 'public') : null;
 
         // Insere o livro na tabela 'livro'
         $livroId = DB::table('livro')->insertGetId([
@@ -64,18 +68,15 @@ class LivroModel extends Model
             ->get(); // Executa a consulta e retorna os resultados
     }
 
-
-
-
     public static function consultar($id)
     {
         return DB::table('livro')->where('id', $id)->first();
     }
 
-
     public static function atualizar($id, Request $request)
     {
-        $path = $request->file('foto_livro') ? $request->file('foto_livro')->store('livros') : null;
+        // Processa o upload da nova imagem, caso tenha sido enviada
+        $path = $request->file('foto_livro') ? $request->file('foto_livro')->store('livros', 'public') : null;
 
         $dados = [
             'titulo' => $request->input('titulo'),
@@ -131,6 +132,17 @@ class LivroModel extends Model
         return $this->belongsTo(Genero::class, 'id_genero');
     }
 
+    // Evento para excluir a imagem ao realizar o soft delete
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($livro) {
+            if ($livro->foto_livro && Storage::exists("public/{$livro->foto_livro}")) {
+                Storage::delete("public/{$livro->foto_livro}");
+            }
+        });
+    }
 
 
 }
