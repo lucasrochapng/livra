@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Usuario;
 use App\Http\Controllers\Livro;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LivroController;
 
 Route::get('/home', function () {
     return view('home');
@@ -13,7 +14,7 @@ Route::get('/faleconosco', function () {
     return view('faleconosco');
 });
 
-// Rota para autenticação
+// Rota para autenticação ---------------------------------------------------------------------------
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -50,8 +51,12 @@ Route::put('editarUsuario/{id}', [Usuario::class, 'update'])->name('editarUsuari
 Route::get('/listarUsuario', [Usuario::class, 'index'])->name('listarUsuario');
 
 
-Route::get('cadastrarLivro', [Livro::class, 'create']);
-Route::post('cadastrarLivro', [Livro::class, 'store']);
-Route::get('listarLivro', [Livro::class, 'index']);
-Route::delete('deletarLivro/{id}', [Livro::class, 'destroy']);
-Route::get('editarLivro/{id}', [Livro::class, 'edit']);
+Route::middleware('auth')->group(function () {
+    Route::get('/livros', [LivroController::class, 'index'])->name('listarLivro');
+    Route::get('/livros/create', [LivroController::class, 'create'])->name('criarLivro');
+    Route::post('/livros', [LivroController::class, 'store'])->name('salvarLivro');
+    Route::get('/livros/{id}/edit', [LivroController::class, 'edit'])->name('editarLivro');
+    Route::post('/livros/{id}/update', [LivroController::class, 'update'])->name('atualizarLivro');
+    Route::get('/livros/{id}/delete', [LivroController::class, 'destroy'])->name('deletarLivro');
+    Route::get('/livros/{id}/toggleStatus', [LivroController::class, 'toggleStatus'])->name('alterarEstadoLivro');
+});

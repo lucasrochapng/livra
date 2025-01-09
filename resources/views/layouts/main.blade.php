@@ -32,7 +32,7 @@
                 </li>
                 <!-- lista de livros do usuário -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/cadastrarLivro') }}">Coleção</a>
+                    <a class="nav-link" href="{{ url('/livros') }}">Coleção</a>
                 </li>
                 <!-- lista com os pedidos de trocas em andamento -->
                 <li class="nav-item">

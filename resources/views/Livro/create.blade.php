@@ -1,55 +1,55 @@
 @extends('layouts.main')
 
-@section('title', 'Coleção')
+@section('title', 'Registrar Livro')
 
 @section('content')
 
-<body>
-    
+<div class="container">
+    <h1 class="mt-4">Registrar Livro</h1>
 
-    <div class="container mt-5">
-        <h2 class="mb-4">Cadastrar Livro</h2>
-        <!-- Exibir mensagem de sessão -->
-        @if(session('mensagem'))
-            <div class="alert alert-success">
-                {{ session('mensagem') }}
-            </div>
-        @endif
-        
-        <form action="cadastrarLivro" method="post" class="mb-3">
-            @csrf
-            <!-- Título -->
-            <div class="mb-3">
-                <label for="titulo" class="form-label">Título</label>
-                <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Digite o título do livro">
-            </div>
+    @if (session('mensagem'))
+        <div class="alert alert-info">{{ session('mensagem') }}</div>
+    @endif
 
-            <!-- Autor -->
-            <div class="mb-3">
-                <label for="autor" class="form-label">Autor</label>
-                <input type="text" class="form-control" id="autor" name="autor" placeholder="Digite o autor do livro">
-            </div>
+    <form action="{{ route('salvarLivro') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título do Livro</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" required>
+        </div>
 
-            <!-- Gênero -->
-            <div class="mb-3">
-                <label for="genero" class="form-label">Gênero</label>
-                <input type="text" class="form-control" id="genero" name="genero" placeholder="Digite o gênero do livro">
-            </div>
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+        </div>
 
-            <!-- Descrição -->
-            <div class="mb-3">
-                <label for="descricao" class="form-label">Descrição</label>
-                <textarea class="form-control" id="descricao" name="descricao" rows="3" placeholder="Digite a descrição do livro"></textarea>
-            </div>
+        <div class="mb-3">
+            <label for="foto_livro" class="form-label">Foto do Livro (opcional)</label>
+            <input type="file" class="form-control" id="foto_livro" name="foto_livro">
+        </div>
 
-            <!-- Botão de enviar -->
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
-        </form>
+        <div class="mb-3">
+            <label for="autor_id" class="form-label">Autor</label>
+            <select class="form-control" id="autor_id" name="autor_id" required>
+                <option value="">Selecione um autor</option>
+                @foreach ($autores as $autor)
+                    <option value="{{ $autor->id }}">{{ $autor->nome }}</option>
+                @endforeach
+            </select>
+        </div>
 
-        <!-- Link para listar livros -->
-        <a href="{{ url('/listarLivro') }}" class="btn btn-secondary">Listar Livros</a>
-    </div>
+        <div class="mb-3">
+            <label for="genero_id" class="form-label">Gênero</label>
+            <select class="form-control" id="genero_id" name="genero_id" required>
+                <option value="">Selecione um gênero</option>
+                @foreach ($generos as $genero)
+                    <option value="{{ $genero->id }}">{{ $genero->nome }}</option>
+                @endforeach
+            </select>
+        </div>
 
-</body>
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+</div>
 
 @endsection

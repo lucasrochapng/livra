@@ -45,4 +45,11 @@ class UsuarioModel extends Authenticatable
         return $this->senha;
     }
 
+    // Relação entre o usuário e o livro
+    public function livros()
+    {
+        return $this->hasMany(LivroModel::class, 'id_usuario');
+    }
+
+
 }

@@ -1,46 +1,38 @@
 @extends('layouts.main')
 
-@section('title', 'Coleção')
+@section('title', 'Home')
 
 @section('content')
 
-<body>
-    <div class="container mt-5">
-        <h2 class="mb-4">Editar Livro</h2>
+<div class="container">
+    <h1 class="mt-4">Editar Livro</h1>
 
-        <form action=" " method="POST" class="mb-3">
-            @csrf
-            @method('PUT')
+    @if (session('mensagem'))
+        <div class="alert alert-info">{{ session('mensagem') }}</div>
+    @endif
 
-            <!-- Campo Título -->
-            <div class="mb-3">
-                <label for="titulo" class="form-label">Título</label>
-                <input type="text" class="form-control" id="titulo" name="titulo" value="{{ $livro->titulo }}" placeholder="Digite o título do livro">
-            </div>
+    <form action="{{ route('atualizarLivro', $livro->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título do Livro</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" value="{{ $livro->titulo }}" required>
+        </div>
 
-            <!-- Campo Autor -->
-            <div class="mb-3">
-                <label for="autor" class="form-label">Autor</label>
-                <input type="text" class="form-control" id="autor" name="autor" value="{{ $livro->autor }}" placeholder="Digite o autor do livro">
-            </div>
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <textarea class="form-control" id="descricao" name="descricao" rows="3" required>{{ $livro->descricao }}</textarea>
+        </div>
 
-            <!-- Campo Gênero -->
-            <div class="mb-3">
-                <label for="genero" class="form-label">Gênero</label>
-                <input type="text" class="form-control" id="genero" name="genero" value="{{ $livro->genero }}" placeholder="Digite o gênero do livro">
-            </div>
+        <div class="mb-3">
+            <label for="foto_livro" class="form-label">Atualizar Foto do Livro (opcional)</label>
+            <input type="file" class="form-control" id="foto_livro" name="foto_livro">
+            @if ($livro->foto_livro)
+                <p class="mt-2">Foto Atual:</p>
+                <img src="{{ asset('storage/' . $livro->foto_livro) }}" alt="Foto do Livro" class="img-thumbnail" style="max-width: 150px;">
+            @endif
+        </div>
 
-            <!-- Campo Descrição -->
-            <div class="mb-3">
-                <label for="descricao" class="form-label">Descrição</label>
-                <textarea class="form-control" id="descricao" name="descricao" rows="3" placeholder="Digite a descrição do livro">{{ $livro->descricao }}</textarea>
-            </div>
-
-            <!-- Botão de Atualizar -->
-            <button type="submit" class="btn btn-primary">Atualizar</button>
-        </form>
-    </div>
-
-</body>
-
+        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+    </form>
+</div>
 @endsection
