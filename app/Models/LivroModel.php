@@ -138,11 +138,22 @@ class LivroModel extends Model
         parent::boot();
 
         static::deleting(function ($livro) {
-            if ($livro->foto_livro && Storage::exists("public/{$livro->foto_livro}")) {
-                Storage::delete("public/{$livro->foto_livro}");
+            $filePath = $livro->foto_livro;
+            $absolutePath = storage_path("app/public/{$filePath}");
+
+            \Log::info('Livro está sendo excluído.', ['livro_id' => $livro->id, 'foto_livro' => $filePath]);
+
+            if ($filePath && file_exists($absolutePath)) {
+                unlink($absolutePath);
+                \Log::info('Arquivo excluído com sucesso.', ['path' => $absolutePath]);
+            } else {
+                \Log::warning('Arquivo não encontrado ou caminho inválido.', ['path' => $absolutePath]);
             }
         });
     }
+
+
+
 
 
 }
