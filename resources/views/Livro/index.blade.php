@@ -17,7 +17,7 @@
         <div class="col-12 mb-4">  <!-- Altere de col-md-3 para col-12 -->
             <div class="card h-100 d-flex flex-row">
                 <!-- Imagem à esquerda (quadrada) -->
-                <div style="width: 150px; height: 150px; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+                <div style="width: 130px; height: 160px; overflow: hidden; display: flex; justify-content: center; align-items: center;">
                     @if ($livro->foto_livro)
                         <img src="{{ asset('storage/' . $livro->foto_livro) }}" class="img-fluid" alt="Foto do Livro" style="object-fit: cover; height: 100%; width: 100%;"/>
                     @else
