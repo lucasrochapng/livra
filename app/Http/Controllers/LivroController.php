@@ -72,8 +72,11 @@ class LivroController extends Controller
     public function edit($id)
     {
         $livro = LivroModel::consultar($id);
-        return view('Livro.edit', compact('livro'));
+        $autores = Autor::all(); // Busca todos os autores
+        $generos = Genero::all(); // Busca todos os gêneros
+        return view('Livro.edit', compact('livro', 'autores', 'generos'));
     }
+
 
     // Atualiza os dados do livro
     public function update(Request $request, $id)

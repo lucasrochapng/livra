@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Home')
+@section('title', 'Editar Livro')
 
 @section('content')
 
@@ -24,6 +24,28 @@
         </div>
 
         <div class="mb-3">
+            <label for="autor_id" class="form-label">Autor</label>
+            <select class="form-control" id="autor_id" name="autor_id" required>
+                @foreach ($autores as $autor)
+                    <option value="{{ $autor->id }}" {{ $livro->id_autor == $autor->id ? 'selected' : '' }}>
+                        {{ $autor->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="genero_id" class="form-label">Gênero</label>
+            <select class="form-control" id="genero_id" name="genero_id" required>
+                @foreach ($generos as $genero)
+                    <option value="{{ $genero->id }}" {{ $livro->id_genero == $genero->id ? 'selected' : '' }}>
+                        {{ $genero->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
             <label for="foto_livro" class="form-label">Atualizar Foto do Livro (opcional)</label>
             <input type="file" class="form-control" id="foto_livro" name="foto_livro">
             @if ($livro->foto_livro)
@@ -35,4 +57,5 @@
         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
     </form>
 </div>
+
 @endsection

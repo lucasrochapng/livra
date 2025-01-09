@@ -80,6 +80,8 @@ class LivroModel extends Model
         $dados = [
             'titulo' => $request->input('titulo'),
             'descricao' => $request->input('descricao'),
+            'id_autor' => $request->input('autor_id'),
+            'id_genero' => $request->input('genero_id'),
         ];
 
         if ($path) {
