@@ -107,4 +107,28 @@ class LivroController extends Controller
             return redirect('listarLivro')->with('mensagem', 'Erro ao atualizar o estado do livro.');
         }
     }
+
+    // LivroController.php
+public function alterarEstado($id)
+    {
+        $livro = LivroModel::find($id);
+        
+        if ($livro) {
+            // Verifica o estado atual e altera
+            if ($livro->estado_atual == 'indisponivel') {
+                $livro->estado_atual = 'disponivel';
+            } elseif ($livro->estado_atual == 'disponivel') {
+                $livro->estado_atual = 'indisponivel';
+            }
+            
+            // Salva as alterações
+            $livro->save();
+            
+            // Retorna para a página com a mensagem
+            return redirect()->back()->with('mensagem', 'Estado do livro alterado com sucesso!');
+        }
+        
+        return redirect()->back()->with('erro', 'Livro não encontrado.');
+    }
+
 }

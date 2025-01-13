@@ -22,8 +22,6 @@ class LivroModel extends Model
 
     public static function salvar(Request $request)
     {
-        // Armazena a imagem, caso tenha sido enviada
-        //$path = $request->file('foto_livro') ? $request->file('foto_livro')->store('livros') : null;
 
         // Processa o upload da nova imagem, caso tenha sido enviada
         $path = $request->file('foto_livro') ? $request->file('foto_livro')->store('livros', 'public') : null;
@@ -47,17 +45,6 @@ class LivroModel extends Model
 
         return true;
     }
-
-
-
-    // public static function listarPorUsuario($idUsuario)
-    // {
-    //     return DB::table('livro')
-    //         ->join('usuario_livro', 'livro.id', '=', 'usuario_livro.id_livro')
-    //         ->where('usuario_livro.id_usuario', $idUsuario)
-    //         ->whereNull('livro.deleted_at')
-    //         ->get();
-    // }
 
     public static function listarPorUsuario($idUsuario)
     {
@@ -150,6 +137,24 @@ class LivroModel extends Model
                 \Log::warning('Arquivo não encontrado ou caminho inválido.', ['path' => $absolutePath]);
             }
         });
+    }
+
+    // Funções do Acervo ------------------
+
+    public static function listarAcervo($idUsuario)
+    {
+        return self::whereDoesntHave('usuarioLivro', function ($query) use ($idUsuario) {
+            $query->where('id_usuario', $idUsuario);
+        })
+        ->where('estado_atual', 'disponivel') // Filtrar apenas livros disponíveis, se necessário
+        ->whereNull('deleted_at') // Excluir livros que foram removidos
+        ->with(['autor', 'genero']) // Carregar os relacionamentos
+        ->get();
+    }
+
+    public function usuario()
+    {
+        return $this->belongsToMany(UsuarioModel::class, 'usuario_livro', 'id_livro', 'id_usuario');
     }
 
 

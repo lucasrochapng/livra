@@ -28,7 +28,7 @@
                 </li>
                 <!-- lista de livros disponíveis para troca -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Acervo</a>
+                    <a class="nav-link" href="{{ url('/acervo') }}">Acervo</a>
                 </li>
                 <!-- lista de livros do usuário -->
                 <li class="nav-item">
