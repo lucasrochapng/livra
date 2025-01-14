@@ -4,33 +4,51 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mt-4">Acervo de Livros</h1>
+    <h1 class="mt-4" style="font-size: 2.5rem; font-weight: bold; color: #2c3e50; text-align: center; margin-bottom: 1rem;">
+        Descubra Novas Histórias
+    </h1>
+    <p style="font-size: 1.125rem; line-height: 1.8; color: #555; text-align: center; margin: 0 auto;">
+        Explore nossa coleção de livros disponíveis para troca e encontre a próxima história 
+        que irá inspirar você. Aqui, você pode escolher entre diferentes gêneros e fazer 
+        conexões com outros leitores apaixonados. Transforme seus livros parados em novas 
+        aventuras literárias de forma simples e colaborativa.
+    </p>
+
 
     <!-- Barra de pesquisa e filtro -->
     <form method="GET" action="{{ route('acervo') }}" class="mb-4">
         <div class="input-group gap-2 align-items-center" style="gap: 0.5rem;">
-            <input type="text" name="pesquisa" class="form-control" placeholder="Pesquisar..." value="{{ request('pesquisa') }}">
+            <!-- Campo de pesquisa -->
+            <input type="text" name="pesquisa" class="form-control" 
+                placeholder="Pesquisar..." value="{{ request('pesquisa') }}" 
+                style="height: 38px;"> <!-- Define a altura -->
             
-            <select name="filtro" class="form-select" style="max-width: 150px;">
+            <!-- Filtro de seleção -->
+            <select name="filtro" class="form-select" 
+                    style="max-width: 150px; height: 38px; background-color: #fff; border-color: #ced4da; color: #6c757d;">
                 <option value="titulo" {{ request('filtro') == 'titulo' ? 'selected' : '' }}>Título</option>
                 <option value="autor" {{ request('filtro') == 'autor' ? 'selected' : '' }}>Autor</option>
                 <option value="genero" {{ request('filtro') == 'genero' ? 'selected' : '' }}>Gênero</option>
             </select>
 
-            <button type="submit" class="btn btn-primary">Buscar</button>
+
+            <!-- Botão de busca -->
+            <button type="submit" class="btn btn-primary" style="height: 38px;">Buscar</button>
         </div>
     </form>
 
+
     <!-- Filtro por letras -->
-    <div class="d-flex flex-wrap mb-4 gap-1" style="gap: 0.5rem;">
+    <div class="d-flex flex-wrap justify-content-center mb-4 gap-1 text-center" style="gap: 0.5rem;">
         @foreach(range('A', 'Z') as $letra)
             <a href="{{ route('acervo', ['letra' => $letra]) }}" 
-               class="btn btn-outline-secondary me-1 mb-1 {{ request('letra') == $letra ? 'active' : '' }}"
-               style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
+            class="btn btn-outline-secondary me-1 mb-1 {{ request('letra') == $letra ? 'active' : '' }}"
+            style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
                 {{ $letra }}
             </a>
         @endforeach
     </div>
+
 
     <!-- Lista de livros -->
     <div class="row">

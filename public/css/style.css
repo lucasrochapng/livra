@@ -48,3 +48,31 @@ body {
     color: #007bff;
     margin-bottom: 10px;
 }
+
+
+/* CSS customizado para a navbar e o estado ativo */
+.navbar {
+    padding: 0.5rem 1rem;
+}
+
+.navbar .nav-link {
+    color: white !important;
+}
+
+.navbar .nav-item.active .nav-link {
+    color: #00458f !important; /* Cor para o link ativo */
+}
+
+.navbar .nav-item:hover .nav-link {
+    color: #00458f !important; /* Cor ao passar o mouse */
+}
+
+.navbar-brand img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.dropdown-menu {
+    min-width: 200px;
+}
