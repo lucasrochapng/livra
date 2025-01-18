@@ -5,24 +5,38 @@
 @section('content')
 
 <div class="container">
-    <h1>Trocas Recebidas</h1>
-    <div class="row">
-        @foreach ($trocas as $troca)
-            <div class="card">
-                <div class="card-body">
-                    <p>
-                        {{ $troca->usuarioOfertante->nome }} está interessado em seu livro 
-                        <strong>{{ $troca->livroReceptor->titulo }}</strong> e está lhe oferecendo o livro 
-                        <strong>{{ $troca->livroOfertante->titulo }}</strong>.
-                    </p>
-                    <button class="btn btn-primary">Aceitar</button>
-                    <button class="btn btn-danger">Recusar</button>
-                </div>
+    <h2>Trocas Recebidas</h2>
+    @forelse ($trocasRecebidas as $troca)
+        <div class="card mb-3">
+            <div class="card-body">
+                <p>
+                    <strong>{{ $troca->usuarioOfertante->nome }}</strong> está interessado em seu livro
+                    <strong>{{ $troca->livroReceptor->titulo }}</strong> e está lhe oferecendo o livro
+                    <strong>{{ $troca->livroOfertante->titulo }}</strong>.
+                </p>
+                <button class="btn btn-success">Aceitar</button>
+                <button class="btn btn-danger">Recusar</button>
             </div>
-        @endforeach
+        </div>
+    @empty
+        <p>Você não possui trocas recebidas.</p>
+    @endforelse
 
-
-    </div>
+    <h2>Trocas Enviadas</h2>
+    @forelse ($trocasEnviadas as $troca)
+        <div class="card mb-3">
+            <div class="card-body">
+                <p>
+                    Você propôs trocar o livro <strong>{{ $troca->livroOfertante->titulo }}</strong> pelo livro
+                    <strong>{{ $troca->livroReceptor->titulo }}</strong> de
+                    <strong>{{ $troca->usuarioReceptor->nome }}</strong>.
+                </p>
+                <button class="btn btn-warning">Cancelar Proposta</button>
+            </div>
+        </div>
+    @empty
+        <p>Você não possui trocas enviadas.</p>
+    @endforelse
 </div>
 
 
