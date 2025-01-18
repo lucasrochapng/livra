@@ -5,7 +5,9 @@
 @section('content')
 
 <div class="container">
-    <h2>Trocas Recebidas</h2>
+    <h2 class="mt-4" style="font-size: 1.5rem; font-weight: bold; color:rgb(109, 109, 109); text-align: left;">
+        Trocas Recebidas
+    </h2>
     @forelse ($trocasRecebidas as $troca)
         <div class="card mb-3">
             <div class="card-body">
@@ -15,14 +17,20 @@
                     <strong>{{ $troca->livroOfertante->titulo }}</strong>.
                 </p>
                 <button class="btn btn-success">Aceitar</button>
-                <button class="btn btn-danger">Recusar</button>
+                <form action="{{ route('troca.recusar', $troca->troca->id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('PATCH')
+                    <button class="btn btn-danger">Recusar</button>
+                </form>
             </div>
         </div>
     @empty
-        <p>Você não possui trocas recebidas.</p>
+        <p>Você não possui nenhuma solicitação de troca para os seus livros.</p>
     @endforelse
 
-    <h2>Trocas Enviadas</h2>
+    <h2 class="mt-4" style="font-size: 1.5rem; font-weight: bold; color:rgb(109, 109, 109); text-align: left;">
+        Trocas Enviadas
+    </h2>
     @forelse ($trocasEnviadas as $troca)
         <div class="card mb-3">
             <div class="card-body">
@@ -31,11 +39,15 @@
                     <strong>{{ $troca->livroReceptor->titulo }}</strong> de
                     <strong>{{ $troca->usuarioReceptor->nome }}</strong>.
                 </p>
-                <button class="btn btn-warning">Cancelar Proposta</button>
+                <form action="{{ route('troca.cancelar', $troca->troca->id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('PATCH')
+                    <button class="btn btn-warning">Cancelar Proposta</button>
+                </form>
             </div>
         </div>
     @empty
-        <p>Você não possui trocas enviadas.</p>
+        <p>Você não solicitou nenhuma troca de livros.</p>
     @endforelse
 </div>
 

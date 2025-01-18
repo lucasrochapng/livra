@@ -14,7 +14,7 @@ class TrocaController extends Controller
     public function index()
     {
         $userId = auth()->id();
-
+    
         // Trocas onde o usuário é o receptor
         $trocasRecebidas = TrocaLivro::with([
             'usuarioOfertante',
@@ -22,9 +22,12 @@ class TrocaController extends Controller
             'livroOfertante',
             'livroReceptor',
         ])
+        ->whereHas('troca', function ($query) {
+            $query->whereNull('estado_atual');
+        })
         ->where('id_usuario_receptor', $userId)
         ->get();
-
+    
         // Trocas onde o usuário é o ofertante
         $trocasEnviadas = TrocaLivro::with([
             'usuarioOfertante',
@@ -32,32 +35,42 @@ class TrocaController extends Controller
             'livroOfertante',
             'livroReceptor',
         ])
+        ->whereHas('troca', function ($query) {
+            $query->whereNull('estado_atual');
+        })
         ->where('id_usuario_ofertante', $userId)
         ->get();
-
+    
         return view('troca.index', compact('trocasRecebidas', 'trocasEnviadas'));
     }
-
+    
 
     // public function index()
     // {
-    //     $userId = auth()->id(); // Obtém o ID do usuário logado
+    //     $userId = auth()->id();
 
-    //     $trocas = TrocaLivro::with([
+    //     // Trocas onde o usuário é o receptor
+    //     $trocasRecebidas = TrocaLivro::with([
     //         'usuarioOfertante',
     //         'usuarioReceptor',
     //         'livroOfertante',
     //         'livroReceptor',
     //     ])
-    //     ->where('id_usuario_receptor', $userId) // Exibe apenas trocas destinadas ao usuário logado
+    //     ->where('id_usuario_receptor', $userId)
     //     ->get();
 
-    //     return view('troca.index', compact('trocas'));
+    //     // Trocas onde o usuário é o ofertante
+    //     $trocasEnviadas = TrocaLivro::with([
+    //         'usuarioOfertante',
+    //         'usuarioReceptor',
+    //         'livroOfertante',
+    //         'livroReceptor',
+    //     ])
+    //     ->where('id_usuario_ofertante', $userId)
+    //     ->get();
+
+    //     return view('troca.index', compact('trocasRecebidas', 'trocasEnviadas'));
     // }
-
-
-
-
 
     public function criarTroca(LivroModel $livro)
     {
@@ -105,7 +118,42 @@ class TrocaController extends Controller
         return redirect()->route('acervo')->with('success', 'Proposta de troca enviada com sucesso!');
     }
 
-
+    public function recusarTroca($id)
+    {
+        // Busca a troca pelo ID e verifica se o usuário é o receptor
+        $troca = Troca::where('id', $id)
+            ->whereHas('trocaLivros', function ($query) {
+                $query->where('id_usuario_receptor', auth()->id());
+            })
+            ->firstOrFail();
+    
+        // Atualiza os campos necessários
+        $troca->update([
+            'estado_atual' => 'recusado',
+            'data_recusado' => now(),
+        ]);
+    
+        return redirect()->route('troca.index')->with('success', 'Troca recusada com sucesso.');
+    }
+    
+    public function cancelarProposta($id)
+    {
+        // Busca a troca pelo ID e verifica se o usuário é o ofertante
+        $troca = Troca::where('id', $id)
+            ->whereHas('trocaLivros', function ($query) {
+                $query->where('id_usuario_ofertante', auth()->id());
+            })
+            ->firstOrFail();
+    
+        // Atualiza os campos necessários
+        $troca->update([
+            'estado_atual' => 'recusado',
+            'data_recusado' => now(),
+        ]);
+    
+        return redirect()->route('troca.index')->with('success', 'Proposta cancelada com sucesso.');
+    }
+    
     
 
 

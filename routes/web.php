@@ -76,4 +76,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/troca/{livro}', [TrocaController::class, 'criarTroca'])->name('troca.criar');
     Route::post('/troca', [TrocaController::class, 'store'])->name('troca.store');
     Route::get('/trocas', [TrocaController::class, 'index'])->name('troca.index');
+    Route::patch('/trocas/{id}/recusar', [TrocaController::class, 'recusarTroca'])->name('troca.recusar');
+    Route::patch('/trocas/{id}/cancelar', [TrocaController::class, 'cancelarProposta'])->name('troca.cancelar');
+
 });
