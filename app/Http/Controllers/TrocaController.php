@@ -13,15 +13,20 @@ class TrocaController extends Controller
 
     public function index()
     {
+        $userId = auth()->id(); // Obtém o ID do usuário logado
+
         $trocas = TrocaLivro::with([
             'usuarioOfertante',
             'usuarioReceptor',
-            'livroOfertante', // Carrega diretamente o relacionamento com LivroModel
-            'livroReceptor', // Carrega diretamente o relacionamento com LivroModel
-        ])->get();
+            'livroOfertante',
+            'livroReceptor',
+        ])
+        ->where('id_usuario_receptor', $userId) // Exibe apenas trocas destinadas ao usuário logado
+        ->get();
 
         return view('troca.index', compact('trocas'));
     }
+
 
 
 

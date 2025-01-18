@@ -163,8 +163,6 @@ class LivroModel extends Model
             ->withPivot('id_livro', 'id_usuario'); // Mesma abordagem sem timestamps
     }
 
-
-
     public function trocas()
     {
         return $this->belongsToMany(Troca::class, 'troca_livro');
