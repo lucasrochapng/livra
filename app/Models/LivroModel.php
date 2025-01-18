@@ -157,6 +157,20 @@ class LivroModel extends Model
         return $this->belongsToMany(UsuarioModel::class, 'usuario_livro', 'id_livro', 'id_usuario');
     }
 
+    public function usuarios()
+    {
+        return $this->belongsToMany(UsuarioModel::class, 'usuario_livro', 'id_livro', 'id_usuario')
+            ->withPivot('id_livro', 'id_usuario'); // Mesma abordagem sem timestamps
+    }
+
+
+
+    public function trocas()
+    {
+        return $this->belongsToMany(Troca::class, 'troca_livro');
+    }
+
+
 
 
 

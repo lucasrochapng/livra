@@ -51,5 +51,16 @@ class UsuarioModel extends Authenticatable
         return $this->hasMany(LivroModel::class, 'id_usuario');
     }
 
+    public function trocasOfertadas()
+    {
+        return $this->hasMany(TrocaLivro::class, 'id_usuario_ofertante');
+    }
+
+    public function trocasRecebidas()
+    {
+        return $this->hasMany(TrocaLivro::class, 'id_usuario_receptor');
+    }
+
+
 
 }

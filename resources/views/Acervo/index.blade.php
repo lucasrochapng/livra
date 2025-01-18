@@ -79,9 +79,10 @@
                         <p class="text-muted" style="font-size: 0.85rem; margin-top: auto;">
                             <strong>Dono do Livro:</strong> {{ $livro->usuario->first()->nome ?? 'Desconhecido' }}
                         </p>
-                        <div class="d-flex justify-content-start mt-2">
-                            <a href="{{ route('oferecerTroca', $livro->id) }}" class="btn btn-primary btn-sm">Oferecer Troca</a>
-                        </div>
+                        <a href="{{ route('troca.criar', $livro->id) }}" class="btn btn-primary">
+                            Oferecer Troca
+                        </a>
+
                     </div>
                 </div>
             </div>

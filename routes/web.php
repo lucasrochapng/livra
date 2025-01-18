@@ -5,6 +5,7 @@ use App\Http\Controllers\Usuario;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LivroController;
 use App\Http\Controllers\AcervoController;
+use App\Http\Controllers\TrocaController;
 
 Route::get('/home', function () {
     return view('home');
@@ -70,3 +71,9 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/livro/alterar-estado/{id}', [LivroController::class, 'alterarEstado'])->name('alterarEstadoLivro');
 
+// Rotas para Troca
+Route::middleware('auth')->group(function () {
+    Route::get('/troca/{livro}', [TrocaController::class, 'criarTroca'])->name('troca.criar');
+    Route::post('/troca', [TrocaController::class, 'store'])->name('troca.store');
+    Route::get('/trocas', [TrocaController::class, 'index'])->name('troca.index');
+});
