@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LivroModel;
 use App\Models\TrocaLivro;
 use App\Models\Troca;
+use App\Models\UsuarioLivro;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -166,6 +167,31 @@ class TrocaController extends Controller
         return redirect()->route('troca.index')->with('success', 'Troca aceita com sucesso!');
     }
     
+    public function finalizarTroca(Troca $troca)
+    {
+        // Atualiza o estado e a data da troca
+        $troca->update([
+            'estado_atual' => 'finalizado',
+            'data_troca' => now(),
+        ]);
 
+        // Recupera os registros da tabela troca_livro
+        $trocaLivros = TrocaLivro::where('id_troca', $troca->id)->first();
+
+        if ($trocaLivros) {
+            // Atualiza a tabela usuario_livro para inverter os donos dos livros
+            UsuarioLivro::where('id_livro', $trocaLivros->id_livro_ofertante)
+                ->update(['id_usuario' => $trocaLivros->id_usuario_receptor]);
+
+            UsuarioLivro::where('id_livro', $trocaLivros->id_livro_receptor)
+                ->update(['id_usuario' => $trocaLivros->id_usuario_ofertante]);
+        }
+
+        // Redireciona para a página de trocas com uma mensagem de sucesso
+        return redirect()->route('troca.index')->with('success', 'Troca finalizada e os livros foram atualizados!');
+    }
+
+
+    
 
 }

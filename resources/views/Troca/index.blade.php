@@ -81,13 +81,21 @@
                             <i class="fa fa-whatsapp"></i> WhatsApp
                         </a>
                     @endif
-                    <button class="btn btn-primary">Troca Finalizada</button>
+                    <form action="{{ route('troca.finalizar', $troca->id) }}" method="POST" style="display: inline;">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn btn-primary">Troca Finalizada</button>
+                    </form>
+
                 </div>
             </div>
         @empty
             <p>Você não possui trocas em andamento.</p>
         @endforelse
     </div>
+
+
+
 
 
 @endsection
