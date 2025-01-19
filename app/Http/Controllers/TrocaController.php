@@ -40,37 +40,34 @@ class TrocaController extends Controller
         })
         ->where('id_usuario_ofertante', $userId)
         ->get();
+
+        // Trocas onde o usuário é o ofertante
+        $trocasComoOfertante = Troca::whereHas('trocaLivros', function ($query) use ($userId) {
+            $query->where('id_usuario_ofertante', $userId);
+        })
+        ->where('estado_atual', 'em_andamento')
+        ->get()
+        ->map(function ($troca) {
+            $troca->papel = 'ofertante'; // Adiciona uma propriedade personalizada
+            return $troca;
+        });
+
+        // Trocas onde o usuário é o receptor
+        $trocasComoReceptor = Troca::whereHas('trocaLivros', function ($query) use ($userId) {
+            $query->where('id_usuario_receptor', $userId);
+        })
+        ->where('estado_atual', 'em_andamento')
+        ->get()
+        ->map(function ($troca) {
+            $troca->papel = 'receptor'; // Adiciona uma propriedade personalizada
+            return $troca;
+        });
+
+        // Combina as duas listas
+        $trocas = $trocasComoOfertante->merge($trocasComoReceptor);
     
-        return view('troca.index', compact('trocasRecebidas', 'trocasEnviadas'));
+        return view('troca.index', compact('trocasRecebidas', 'trocasEnviadas', 'trocas'));
     }
-    
-
-    // public function index()
-    // {
-    //     $userId = auth()->id();
-
-    //     // Trocas onde o usuário é o receptor
-    //     $trocasRecebidas = TrocaLivro::with([
-    //         'usuarioOfertante',
-    //         'usuarioReceptor',
-    //         'livroOfertante',
-    //         'livroReceptor',
-    //     ])
-    //     ->where('id_usuario_receptor', $userId)
-    //     ->get();
-
-    //     // Trocas onde o usuário é o ofertante
-    //     $trocasEnviadas = TrocaLivro::with([
-    //         'usuarioOfertante',
-    //         'usuarioReceptor',
-    //         'livroOfertante',
-    //         'livroReceptor',
-    //     ])
-    //     ->where('id_usuario_ofertante', $userId)
-    //     ->get();
-
-    //     return view('troca.index', compact('trocasRecebidas', 'trocasEnviadas'));
-    // }
 
     public function criarTroca(LivroModel $livro)
     {
@@ -154,6 +151,20 @@ class TrocaController extends Controller
         return redirect()->route('troca.index')->with('success', 'Proposta cancelada com sucesso.');
     }
     
+    public function aceitar($id)
+    {
+        // Busca a troca pelo ID
+        $troca = Troca::findOrFail($id);
+    
+        // Atualiza o estado e a data de aceitação
+        $troca->update([
+            'estado_atual' => 'em_andamento',
+            'data_aceito' => now(),
+        ]);
+    
+        // Redireciona para a página de trocas com uma mensagem de sucesso
+        return redirect()->route('troca.index')->with('success', 'Troca aceita com sucesso!');
+    }
     
 
 

@@ -78,5 +78,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/trocas', [TrocaController::class, 'index'])->name('troca.index');
     Route::patch('/trocas/{id}/recusar', [TrocaController::class, 'recusarTroca'])->name('troca.recusar');
     Route::patch('/trocas/{id}/cancelar', [TrocaController::class, 'cancelarProposta'])->name('troca.cancelar');
+    Route::patch('/troca/{id}/aceitar', [TrocaController::class, 'aceitar'])->name('troca.aceitar');
 
 });
