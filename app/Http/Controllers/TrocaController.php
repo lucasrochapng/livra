@@ -185,6 +185,13 @@ class TrocaController extends Controller
 
             UsuarioLivro::where('id_livro', $trocaLivros->id_livro_receptor)
                 ->update(['id_usuario' => $trocaLivros->id_usuario_ofertante]);
+
+            // Atualiza o estado dos livros na tabela livro para 'indisponivel'
+            LivroModel::where('id', $trocaLivros->id_livro_ofertante)
+                ->update(['estado_atual' => 'indisponivel']);
+
+            LivroModel::where('id', $trocaLivros->id_livro_receptor)
+                ->update(['estado_atual' => 'indisponivel']);
         }
 
         // Redireciona para a página de trocas com uma mensagem de sucesso

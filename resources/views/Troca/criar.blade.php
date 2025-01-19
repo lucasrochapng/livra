@@ -4,7 +4,9 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mt-4">Oferecer Troca</h1>
+    <h2 class="mt-4" style="font-size: 1.5rem; font-weight: bold; color:rgb(109, 109, 109); text-align: left;">
+        Livro Solicitado
+    </h2>
 
     <!-- Informações do Livro Selecionado -->
     <div class="card mb-4">
@@ -16,7 +18,9 @@
     </div>
 
     <!-- Lista de Livros Disponíveis do Usuário -->
-    <h3>Seus Livros Disponíveis</h3>
+    <h2 class="mt-4" style="font-size: 1.5rem; font-weight: bold; color:rgb(109, 109, 109); text-align: left;">
+        Seus Livros Disponíveis Para Troca
+    </h2>
     <div class="row">
         @forelse($livrosDisponiveis as $livro)
             <div class="col-md-4 mb-4">

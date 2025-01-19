@@ -4,7 +4,9 @@
 
 @section('content')
 <div class="container">
-    <h1 class="text-center">Oferecer Troca</h1>
+    <h2 class="mt-4" style="font-size: 1.5rem; font-weight: bold; color:rgb(109, 109, 109); text-align: left;">
+        Oferecer Troca
+    </h2>
 
     <!-- Livro solicitado -->
     <div class="card mb-4">
