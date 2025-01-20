@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LivroController;
 use App\Http\Controllers\AcervoController;
 use App\Http\Controllers\TrocaController;
+use App\Http\Controllers\AvaliacaoController;
 
 Route::get('/home', function () {
     return view('home');
@@ -80,4 +81,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/trocas/{id}/cancelar', [TrocaController::class, 'cancelarProposta'])->name('troca.cancelar');
     Route::patch('/troca/{id}/aceitar', [TrocaController::class, 'aceitar'])->name('troca.aceitar');
     Route::patch('/troca/{troca}/finalizar', [TrocaController::class, 'finalizarTroca'])->name('troca.finalizar');
+});
+
+// Rotas para as avaliações de usuários
+Route::middleware('auth')->group(function () {
+    Route::get('/avaliacoes/pendentes', [AvaliacaoController::class, 'pendentes'])->name('avaliacoes.pendentes');
+    Route::post('/avaliacoes/{id}', [AvaliacaoController::class, 'avaliar'])->name('avaliacoes.avaliar');
 });

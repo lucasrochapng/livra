@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -50,7 +51,8 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         @if(Auth::check())
                             <span class="dropdown-item font-weight-bold">{{ Auth::user()->nome }}</span>
-                            <a class="dropdown-item" href="{{ url('/configuracoes') }}">Configurações</a>
+                            <a class="dropdown-item" href="{{ url('/#') }}">Perfil</a>
+                            <a class="dropdown-item" href="{{ url('/avaliacoes/pendentes') }}">Avaliações</a>
                             <a class="dropdown-item" href="{{ url('/suporte') }}">Suporte</a>
                             <a class="dropdown-item" href="{{ url('/sobre') }}">Sobre Nós</a>
                             <a class="dropdown-item text-danger" href="{{ route('logout') }}"

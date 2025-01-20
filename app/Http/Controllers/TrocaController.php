@@ -6,6 +6,7 @@ use App\Models\LivroModel;
 use App\Models\TrocaLivro;
 use App\Models\Troca;
 use App\Models\UsuarioLivro;
+use App\Models\AvaliacoesPendentes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -192,6 +193,21 @@ class TrocaController extends Controller
 
             LivroModel::where('id', $trocaLivros->id_livro_receptor)
                 ->update(['estado_atual' => 'indisponivel']);
+        }
+
+        // Adicionar registros de avaliações pendentes para ambos os usuários
+        foreach ($troca->trocaLivros as $livro) {
+            AvaliacoesPendentes::create([
+                'id_troca' => $troca->id,
+                'id_usuario_avaliador' => $livro->id_usuario_ofertante,
+                'id_usuario_avaliado' => $livro->id_usuario_receptor,
+            ]);
+
+            AvaliacoesPendentes::create([
+                'id_troca' => $troca->id,
+                'id_usuario_avaliador' => $livro->id_usuario_receptor,
+                'id_usuario_avaliado' => $livro->id_usuario_ofertante,
+            ]);
         }
 
         // Redireciona para a página de trocas com uma mensagem de sucesso

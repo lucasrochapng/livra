@@ -78,7 +78,18 @@
                         </p>
                         <p class="text-muted" style="font-size: 0.85rem; margin-top: auto;">
                             <strong>Dono do Livro:</strong> {{ $livro->usuario->first()->nome ?? 'Desconhecido' }}
+
+                            @if ($livro->usuario->first())
+                                @php
+                                    $mediaNota = $livro->usuario->first()->mediaAvaliacoes() ?? 0; // Calcula a média
+                                @endphp
+                                <span style="margin-left: 10px;">
+                                    <i class="fas fa-star text-warning"></i> {{-- Ícone de estrela --}}
+                                    {{ number_format($mediaNota, 1) }} {{-- Exibe a média com uma casa decimal --}}
+                                </span>
+                            @endif
                         </p>
+
                         <a href="{{ route('troca.criar', $livro->id) }}" class="btn btn-primary">
                             Oferecer Troca
                         </a>

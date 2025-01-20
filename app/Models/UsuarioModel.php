@@ -61,6 +61,11 @@ class UsuarioModel extends Authenticatable
         return $this->hasMany(TrocaLivro::class, 'id_usuario_receptor');
     }
 
-
+    public function mediaAvaliacoes()
+    {
+        return $this->hasMany(AvaliacaoUsuario::class, 'id_avaliado')
+            ->avg('nota');
+    }
+    
 
 }
