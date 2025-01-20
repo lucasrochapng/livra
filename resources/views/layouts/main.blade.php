@@ -51,7 +51,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         @if(Auth::check())
                             <span class="dropdown-item font-weight-bold">{{ Auth::user()->nome }}</span>
-                            <a class="dropdown-item" href="{{ url('/#') }}">Perfil</a>
+                            <a class="dropdown-item" href="{{ url('/usuario') }}">Perfil</a>
                             <a class="dropdown-item" href="{{ url('/avaliacoes/pendentes') }}">Avaliações</a>
                             <a class="dropdown-item" href="{{ url('/suporte') }}">Suporte</a>
                             <a class="dropdown-item" href="{{ url('/sobre') }}">Sobre Nós</a>

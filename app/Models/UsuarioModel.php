@@ -66,6 +66,14 @@ class UsuarioModel extends Authenticatable
         return $this->hasMany(AvaliacaoUsuario::class, 'id_avaliado')
             ->avg('nota');
     }
+
+    public function avaliacoesRecebidas()
+    {
+        return $this->hasMany(AvaliacaoUsuario::class, 'id_avaliado');
+    }
+
+
+    
     
 
 }

@@ -17,5 +17,15 @@ class AvaliacaoUsuario extends Model
         'nota',
         'comentario',
     ];
+
+    public function avaliador()
+    {
+        return $this->belongsTo(UsuarioModel::class, 'id_avaliador');
+    }
+
+
+
+
+
 }
 

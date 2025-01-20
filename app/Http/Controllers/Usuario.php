@@ -6,9 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\UsuarioModel;
+use App\Models\AvaliacaoUsuario;
 
 class Usuario extends Controller
 {
+
+    public function index()
+    {
+        $usuario = auth()->user(); // Obtém o usuário autenticado
+    
+        // Calcula a média usando o método na model
+        $mediaNota = $usuario->mediaAvaliacoes();
+    
+        // Obtém as avaliações recebidas
+        $avaliacoes = $usuario->avaliacoesRecebidas()->with('avaliador')->get();
+    
+        return view('usuario.index', compact('usuario', 'mediaNota', 'avaliacoes'));
+    }
+       
     
     public function create(){
         return view('Usuario.create');
@@ -25,10 +40,10 @@ class Usuario extends Controller
         }
     }
 
-    public function index(){
-        $usuarios = UsuarioModel::listar();
-        return view('Usuario.index', compact('usuarios'));
-    }
+    // public function index(){
+    //     $usuarios = UsuarioModel::listar();
+    //     return view('Usuario.index', compact('usuarios'));
+    // }
 
     public function destroy($id){
         $status = UsuarioModel::deletar($id);

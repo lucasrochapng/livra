@@ -46,7 +46,7 @@
                 </form>
 
                 <div class="mt-3 text-center">
-                    <a href="{{ url('/login') }}" class="text-primary">Já tem uma conta? Faça login</a>
+                    <p>Já tem uma conta? <a href="{{ url('/login') }}" class="text-primary">Faça login</a>
                 </div>
 
             </div>

@@ -44,6 +44,9 @@ Route::post('cadastrarUsuario', [Usuario::class, 'store']);
 Route::get('listarUsuario', [Usuario::class, 'index']);
 Route::delete('deletarUsuario/{id}', [Usuario::class, 'destroy']);
 
+Route::get('/usuario', [Usuario::class, 'index'])->name('usuario.index');
+
+
 // Rota para exibir o formulário de edição (GET)
 Route::get('editarUsuario/{id}', [Usuario::class, 'edit'])->name('editarUsuario');
 // Rota para atualizar os dados do usuário (PUT)
