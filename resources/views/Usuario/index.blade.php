@@ -31,6 +31,12 @@
         <div class="col-md-8 mb-3">
             <div class="card h-100">
                 <div class="card-body">
+                    <!--teste-->
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ route('usuario.edit', $usuario->id) }}" class="btn btn-link position-absolute" style="top: 10px; right: 10px;">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                    </div>
                     <div class="row">
                         <div class="col-4"><strong>Nome</strong></div>
                         <div class="col-8 text-muted">{{ $usuario->nome }}</div>

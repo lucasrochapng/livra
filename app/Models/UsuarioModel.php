@@ -16,6 +16,15 @@ class UsuarioModel extends Authenticatable
     use HasFactory;
     protected $table = 'usuario';
 
+    public $timestamps = false;
+
+    protected $fillable = [
+        'nome',
+        'telefone',
+        'email',
+        'senha',
+    ];
+
     public static function salvar(Request $request){
         $status = DB::table('usuario')->insert([
             'nome'=>$request->input('nome'),
