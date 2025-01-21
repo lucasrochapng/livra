@@ -66,7 +66,7 @@
                             </form>
                         @else
                             <a class="dropdown-item" href="{{ url('/login') }}">Entrar</a>
-                            <a class="dropdown-item" href="{{ url('/suporte') }}">Suporte</a>
+                            <a class="dropdown-item" href="{{ url('/faleconosco') }}">Suporte</a>
                             <a class="dropdown-item" href="{{ url('/sobre') }}">Sobre Nós</a>
                         @endif
                     </div>
