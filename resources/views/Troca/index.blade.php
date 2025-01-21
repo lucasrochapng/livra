@@ -69,7 +69,7 @@
                             Assim, vocês poderão alinhar os detalhes e dar continuidade ao processo. Obrigado!
                         </p>
                         <a href="https://wa.me/{{ $troca->trocaLivros->first()->usuarioReceptor->telefone }}" target="_blank" class="btn btn-success">
-                            <i class="fa fa-whatsapp"></i> WhatsApp
+                            <i class="bi bi-whatsapp"></i> WhatsApp
                         </a>
                     @elseif ($troca->papel === 'receptor')
                         <p>
@@ -78,7 +78,7 @@
                             Assim, vocês poderão alinhar os detalhes e dar continuidade ao processo. Obrigado!
                         </p>
                         <a href="https://wa.me/{{ $troca->trocaLivros->first()->usuarioOfertante->telefone }}" target="_blank" class="btn btn-success">
-                            <i class="fa fa-whatsapp"></i> WhatsApp
+                            <i class="bi bi-whatsapp"></i> WhatsApp
                         </a>
                     @endif
                     <form action="{{ route('troca.finalizar', $troca->id) }}" method="POST" style="display: inline;">
@@ -94,8 +94,6 @@
         @endforelse
     </div>
 
-
-
-
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH">
+    
 @endsection
