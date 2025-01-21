@@ -45,8 +45,16 @@
                 </li>
                 <!-- Ícone de usuário -->
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="bi bi-person-circle"></i>
+                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!-- <i class="bi bi-person-circle"></i> -->
+                        @if(Auth::check())
+                            <!-- Exibe o avatar do usuário autenticado -->
+                            <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->nome) }}&size=32"
+                                class="rounded-circle" alt="Avatar" style="width: 24px; height: 24px;">
+                        @else
+                            <!-- Exibe um ícone genérico se o usuário não estiver autenticado -->
+                            <i class="bi bi-person-circle"></i>
+                        @endif
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         @if(Auth::check())
