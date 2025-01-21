@@ -76,9 +76,12 @@
                         <p class="card-text" style="font-size: 0.75rem; color: #555; line-height: 1.2; margin-bottom: 0.5rem;">
                             {{ Str::limit($livro->descricao, 350) }}
                         </p>
+                        
                         <p class="text-muted" style="font-size: 0.85rem; margin-top: auto;">
-                            <strong>Dono do Livro:</strong> {{ $livro->usuario->first()->nome ?? 'Desconhecido' }}
-
+                            <strong>Dono do Livro:</strong>
+                            <a href="{{ route('usuario.show', $livro->usuario->first()->id) }}">
+                                {{ $livro->usuario->first()->nome ?? 'Desconhecido' }}
+                            </a>
                             @if ($livro->usuario->first())
                                 @php
                                     $mediaNota = $livro->usuario->first()->mediaAvaliacoes() ?? 0; // Calcula a média

@@ -39,10 +39,6 @@
                 <li class="nav-item {{ request()->is('trocas') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('/trocas') }}">Trocas</a>
                 </li>
-                <!-- Contato -->
-                <li class="nav-item {{ request()->is('faleconosco') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('/faleconosco') }}">Contato</a>
-                </li>
                 <!-- Ícone de usuário -->
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -61,7 +57,7 @@
                             <span class="dropdown-item font-weight-bold">{{ Auth::user()->nome }}</span>
                             <a class="dropdown-item" href="{{ url('/usuario') }}">Perfil</a>
                             <a class="dropdown-item" href="{{ url('/avaliacoes/pendentes') }}">Avaliações</a>
-                            <a class="dropdown-item" href="{{ url('/suporte') }}">Suporte</a>
+                            <a class="dropdown-item" href="{{ url('/faleconosco') }}">Suporte</a>
                             <a class="dropdown-item" href="{{ url('/sobre') }}">Sobre Nós</a>
                             <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a>

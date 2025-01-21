@@ -59,23 +59,6 @@ class Usuario extends Controller
         return view('usuario.edit', compact('usuario'));
     }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $request->validate([
-    //         'nome' => 'required|string|max:255',
-    //         'telefone' => 'nullable|string|max:15',
-    //     ]);
-    
-    //     $usuario = UsuarioModel::findOrFail($id);
-    //     $usuario->nome = $request->input('nome');
-    //     $usuario->telefone = $request->input('telefone');
-    
-    //     $usuario->save();
-    
-    //     return redirect()->route('usuario.index')->with('success', 'Usuário atualizado com sucesso!');
-    // }
-    
-    
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -112,47 +95,32 @@ class Usuario extends Controller
         }
     }
 
-    // public function edit($id){
-    //     $usuario = UsuarioModel::consultar($id);
-    //     return view('Usuario.edit', compact('usuario'));
-    // }
+    public function show($id)
+    {
+        // Encontra o usuário pelo ID
+        $usuario = UsuarioModel::findOrFail($id);
 
-    // public function update(Request $request, $id){
-    //     // Validação dos dados do usuário, se necessário
-    //     $validatedData = $request->validate([
-    //         'nome' => 'required|string|max:100',
-    //         'email' => 'required|email|max:100',
-    //         'senha' => 'nullable|string|min:6',
-    //         'telefone' => 'nullable|string|max:15',
-    //     ]);
+        // Calcula a média usando o método na model
+        $mediaNota = $usuario->mediaAvaliacoes();
 
-    //     // Encontrar o usuário pelo ID
-    //     $usuario = UsuarioModel::consultar($id);
+        // Obtém as avaliações recebidas
+        $avaliacoes = $usuario->avaliacoesRecebidas()->with('avaliador')->get();
 
-    //     if (!$usuario) {
-    //         return redirect()->back()->with('error', 'Usuário não encontrado.');
-    //     }
+        // Calcula o número de trocas concluídas
+        $trocasConcluidas = DB::table('troca_livro')
+            ->join('troca', 'troca_livro.id_troca', '=', 'troca.id')
+            ->where(function ($query) use ($usuario) {
+                $query->where('troca_livro.id_usuario_ofertante', $usuario->id)
+                    ->orWhere('troca_livro.id_usuario_receptor', $usuario->id);
+            })
+            ->where('troca.estado_atual', 'finalizado')
+            ->distinct('troca_livro.id_troca')
+            ->count('troca_livro.id_troca');
 
-    //     // Atualizar os dados do usuário
-    //     $status = DB::table('usuario')->where('id', $id)->update([
-    //         'nome' => $request->nome,
-    //         'email' => $request->email,
-    //         'senha' => $request->senha,
-    //         'telefone' => $request->telefone,
-    //     ]);
+        return view('usuario.show', compact('usuario', 'mediaNota', 'avaliacoes', 'trocasConcluidas'));
+    }
 
-    //     if($status) {
-    //         return redirect()->route('listarUsuario')
-    //         ->with('success', 'Usuário atualizado com sucesso!');
-    //     } else {
-    //         return redirect()->back()
-    //         ->with('error', 'Erro ao atualizar o usuário');
-    //     }
-
-        
-
-    // }
-
+    
 
     
 

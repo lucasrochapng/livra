@@ -76,3 +76,23 @@ body {
 .dropdown-menu {
     min-width: 200px;
 }
+
+.team-photo {
+    width: 150px; /* Define o tamanho fixo */
+    height: 150px; /* Garante o formato quadrado */
+    object-fit: cover; /* Corta a imagem para caber no espaço */
+    border-radius: 50%; /* Deixa as bordas arredondadas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona uma leve sombra */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efeito hover */
+}
+
+.team-photo:hover {
+    transform: scale(1.1); /* Aumenta levemente no hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Intensifica a sombra no hover */
+}
+
+.team-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

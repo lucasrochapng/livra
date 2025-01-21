@@ -16,6 +16,10 @@ Route::get('/faleconosco', function () {
     return view('faleconosco');
 });
 
+Route::get('/sobre', function () {
+    return view('sobrenos');
+});
+
 // Rota para autenticação ---------------------------------------------------------------------------
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -28,13 +32,8 @@ Route::middleware('auth')->group(function(){
     });
 });
 
-// Rotas adicionais
-Route::get('/suporte', function () {
-    return view('suporte');
-});
-Route::get('/sobre', function () {
-    return view('sobre');
-});
+
+
 Route::get('/configuracoes', function () {
     return view('configuracoes');
 })->middleware('auth'); // Apenas usuários logados podem acessar
@@ -47,6 +46,9 @@ Route::post('cadastrarUsuario', [Usuario::class, 'store']);
 Route::get('/usuario', [Usuario::class, 'index'])->name('usuario.index');
 Route::get('/usuario/{id}/editar', [Usuario::class, 'edit'])->name('usuario.edit');
 Route::put('/usuario/{id}', [Usuario::class, 'update'])->name('usuario.update');
+
+//Ver o perfil de outros usuários
+Route::get('/usuario/{id}', [Usuario::class, 'show'])->name('usuario.show');
 
 
 
