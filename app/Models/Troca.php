@@ -33,5 +33,7 @@ class Troca extends Model
         return $this->hasMany(TrocaLivro::class, 'id_troca');
     }
 
+    
+
 
 }

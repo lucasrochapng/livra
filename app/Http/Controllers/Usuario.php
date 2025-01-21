@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\UsuarioModel;
+use App\Models\Troca;
 use App\Models\AvaliacaoUsuario;
 
 class Usuario extends Controller
@@ -14,15 +15,26 @@ class Usuario extends Controller
 
     public function index()
     {
-        $usuario = auth()->user(); // Obtém o usuário autenticado
+        $usuario = auth()->user();
     
         // Calcula a média usando o método na model
         $mediaNota = $usuario->mediaAvaliacoes();
     
         // Obtém as avaliações recebidas
         $avaliacoes = $usuario->avaliacoesRecebidas()->with('avaliador')->get();
+
+        // Calcula o número de trocas concluídas
+        $trocasConcluidas = DB::table('troca_livro')
+        ->join('troca', 'troca_livro.id_troca', '=', 'troca.id')
+        ->where(function ($query) use ($usuario) {
+            $query->where('troca_livro.id_usuario_ofertante', $usuario->id)
+                ->orWhere('troca_livro.id_usuario_receptor', $usuario->id);
+        })
+        ->where('troca.estado_atual', 'finalizado')
+        ->distinct('troca_livro.id_troca')
+        ->count('troca_livro.id_troca');
     
-        return view('usuario.index', compact('usuario', 'mediaNota', 'avaliacoes'));
+        return view('usuario.index', compact('usuario', 'mediaNota', 'avaliacoes', 'trocasConcluidas'));
     }
        
     
@@ -140,6 +152,9 @@ class Usuario extends Controller
         
 
     // }
+
+
+    
 
 
 }

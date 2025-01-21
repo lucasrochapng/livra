@@ -51,6 +51,11 @@
                         <div class="col-4"><strong>Telefone</strong></div>
                         <div class="col-8 text-muted">{{ $usuario->telefone ?? 'Não informado' }}</div>
                     </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4"><strong>Trocas Concluídas</strong></div>
+                        <div class="col-8 text-muted">{{ $trocasConcluidas }}</div>
+                    </div>
                 </div>
             </div>
         </div>

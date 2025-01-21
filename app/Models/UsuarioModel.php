@@ -81,7 +81,10 @@ class UsuarioModel extends Authenticatable
         return $this->hasMany(AvaliacaoUsuario::class, 'id_avaliado');
     }
 
-
+    public function trocas()
+    {
+        return $this->hasMany(Troca::class, 'id_usuario');
+    }
     
     
 

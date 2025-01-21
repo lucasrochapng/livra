@@ -5,7 +5,9 @@
 @section('content')
 
 <div class="container mt-5">
-    <h2>Editar Usuário</h2>
+    <h2 class="mt-4" style="font-size: 1.5rem; font-weight: bold; color:rgb(109, 109, 109); text-align: left;">
+        Editar Informações
+    </h2>
     <form action="{{ route('usuario.update', $usuario->id) }}" method="POST">
         @csrf
         @method('PUT')
