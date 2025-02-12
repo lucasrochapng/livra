@@ -40,23 +40,12 @@ Route::get('/configuracoes', function () {
 
 Route::get('cadastrarUsuario', [Usuario::class, 'create']);
 Route::post('cadastrarUsuario', [Usuario::class, 'store']);
-//Route::get('listarUsuario', [Usuario::class, 'index']);
-//Route::delete('deletarUsuario/{id}', [Usuario::class, 'destroy']);
-
 Route::get('/usuario', [Usuario::class, 'index'])->name('usuario.index');
 Route::get('/usuario/{id}/editar', [Usuario::class, 'edit'])->name('usuario.edit');
 Route::put('/usuario/{id}', [Usuario::class, 'update'])->name('usuario.update');
 
 //Ver o perfil de outros usuários
 Route::get('/usuario/{id}', [Usuario::class, 'show'])->name('usuario.show');
-
-
-
-// Rota para exibir o formulário de edição (GET)
-//Route::get('editarUsuario/{id}', [Usuario::class, 'edit'])->name('editarUsuario');
-// Rota para atualizar os dados do usuário (PUT)
-//Route::put('editarUsuario/{id}', [Usuario::class, 'update'])->name('editarUsuario');
-//Route::get('/listarUsuario', [Usuario::class, 'index'])->name('listarUsuario');
 
 // Rotas para Coleção (CRUD livro) ----------------------------------------------------------------------
 
